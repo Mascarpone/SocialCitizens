@@ -1,7 +1,5 @@
 package io.github.mascarpone.socialcitizens;
 
-import java.util.Iterator;
-
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
