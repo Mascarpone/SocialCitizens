@@ -3,3 +3,8 @@ main: io.github.mascarpone.socialcitizens.SocialCitizens
 version: 0.0.1-SNAPSHOT
 author: FLV
 depend: [Citizens]
+commands: 
+  snpc:
+    description: Spawn a SocialNPC at Player's location.
+    usage: /snpc [create <name> | remove <id>]
+    
