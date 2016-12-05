@@ -5,9 +5,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 
 import net.citizensnpcs.api.npc.NPC;
@@ -100,17 +97,8 @@ public class SocialNPCTrait extends Trait {
 	
 	
 	// ********************
-	// ACTIONS, UTILITIES AND SOLUTIONS
+	// UTILITIES AND SOLUTIONS
 		
-	// Action: Give a cookie
-	// TODO
-	protected void giveCookie(NPC target, int nb) {
-		this.npc.getNavigator().setTarget(target.getEntity().getLocation().add(1, 0, 1));
-		while(this.npc.getNavigator().isNavigating());
-	}
-	// Action: Hit a player
-	// Action: Be idle
-	
 	// Utility: Evaluate the satisfaction of the instance
 	class SatisfactionUtility implements UtilityFunction { 
 		public double exec() {
@@ -143,13 +131,11 @@ public class SocialNPCTrait extends Trait {
 			if (best_friend == null) {
 				if (npc.getEntity() != null) {
 					npc.faceLocation(npc.getEntity().getLocation().add(0, 5, 0));
-					//((Player) npc).playEffect(npc.getEntity().getLocation().add(0, 1, 0), Effect.SMOKE, 2);
 				}
 			}
 			else {
-				npc.getNavigator().setTarget(best_friend.getEntity().getLocation().add(1, 0, 1));
+				npc.getNavigator().setTarget(best_friend.getEntity(), false);
 				npc.faceLocation(best_friend.getEntity().getLocation());
-				while(npc.getNavigator().isNavigating());
 			}
 			return true;
 		}
@@ -190,7 +176,6 @@ public class SocialNPCTrait extends Trait {
     public void run() {
     	// Check if the NPC is currently doing an action
     	// ??? this.npc.getDefaultGoalController().isExecutingGoal()
-    	/*
     	if (true) {
     		// Compute the utility functions
     		Map<Double, SolutionFunction> decision = new HashMap<Double, SolutionFunction>();
@@ -202,7 +187,6 @@ public class SocialNPCTrait extends Trait {
     			if (sf.exec()) break;
     		}
     	}
-    	*/
     }
     
     
@@ -224,7 +208,7 @@ public class SocialNPCTrait extends Trait {
         }
     }
     
-    // TODO Event Handler for catching a cookie (allow to catch items on the floor)
+    // Event Handler for right click 
     @EventHandler
     public void NPCRightClickEvent(NPCRightClickEvent event) {
     	if (event.getNPC() == this.getNPC()) {
@@ -237,8 +221,7 @@ public class SocialNPCTrait extends Trait {
     				this.social_position.get(friend).buddinessUp(this.present_sensibility);
     			}
     		}
-    		// Show particles
-    		Bukkit.broadcastMessage("<" + this.npc.getName() + "> Ty you!");
+			Bukkit.broadcastMessage("<" + this.npc.getName() + "> Ty you!");
     	}
     }
     
