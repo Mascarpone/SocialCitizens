@@ -1,10 +1,13 @@
 # SocialCitizens
-A Bukkit plugin creating singular NPCs able to build a believable social network.
+A Bukkit plugin creating singular NPCs able to build a believable social
+network.
 
 ![Proposal Slide](https://github.com/Mascarpone/SocialCitizens/blob/master/doc/Proposal%20slide.png)
 
 ## Context
-The SocialCitizens project is a Game AI prototype written by **Mascarpone** and **gemabrow** in November 2016 as part of their final assignment at UCSC, Santa Cruz, USA.
+The SocialCitizens project is a Game AI prototype written by **Mascarpone**
+and **gemabrow** in November 2016 as part of their final assignment at UCSC,
+Santa Cruz, USA.
 
 The main idea is to use a genetic algorithm with utility-curve-based genes to simulate a unique NPC's personality. Then a connected graph is generated to represent the social ties between all the players. The  personality and actual status of an NPC in addition to its position in the graph will lead it to make utility-based decisions.
 
