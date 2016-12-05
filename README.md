@@ -14,7 +14,7 @@ A connected graph is generated to represent the social ties between all
 of the players. With the personality of the NPC and its social status within
 the graph -- within which, the only observable nodes are those at terminating
 edges emanating from the NPC -- the NPC will choose those actions resulting
-in the most utility.
+in the most utility for itself.
 
 ## Tools
 This plugin is built for Bukkit (Minecraft development server) and uses the
