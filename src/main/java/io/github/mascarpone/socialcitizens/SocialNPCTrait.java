@@ -9,9 +9,10 @@ import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import net.citizensnpcs.api.npc.NPC;
+import net.citizensnpcs.api.event.NPCDamageByEntityEvent;
+import net.citizensnpcs.api.event.NPCRightClickEvent;
 import net.citizensnpcs.api.trait.Trait;
 import net.citizensnpcs.api.trait.TraitName;
 
@@ -189,6 +190,7 @@ public class SocialNPCTrait extends Trait {
     public void run() {
     	// Check if the NPC is currently doing an action
     	// ??? this.npc.getDefaultGoalController().isExecutingGoal()
+    	/*
     	if (true) {
     		// Compute the utility functions
     		Map<Double, SolutionFunction> decision = new HashMap<Double, SolutionFunction>();
@@ -200,6 +202,7 @@ public class SocialNPCTrait extends Trait {
     			if (sf.exec()) break;
     		}
     	}
+    	*/
     }
     
     
@@ -207,31 +210,36 @@ public class SocialNPCTrait extends Trait {
 	// EVENT HANDLERS
 	
     // Change the social link's quality with the attacker 
-    // @EventHandler
-    public void NPCDamageByEntityEvent(EntityDamageByEntityEvent event) {
-        if(event.getEntity() instanceof NPC) {
-            NPC attacker = (NPC) event.getDamager();
-            if (this.social_position.containsKey(attacker)) {
-            	this.social_position.get(attacker).buddinessDown(this.hurt_sensibility);
-            }
+    @EventHandler
+    public void NPCDamageByEntityEvent(NPCDamageByEntityEvent event) {
+    	if (event.getNPC() == this.getNPC()) {
+    		if (event.getDamager() instanceof NPC) {
+    			NPC attacker = (NPC) event.getDamager();
+    			if (this.social_position.containsKey(attacker)) {
+    				this.social_position.get(attacker).buddinessDown(this.hurt_sensibility);
+    			}
+    		}
+
+            Bukkit.broadcastMessage("<" + this.npc.getName() + "> Ouch!");
         }
-        Bukkit.broadcastMessage(this.npc.getName() + "> Ouch!");
     }
     
     // TODO Event Handler for catching a cookie (allow to catch items on the floor)
-    // @EventHandler
-    public void NPCRightClickEvent(Player rightClicker) {
-    	// Check that it has a cookie
-    	// Take the cookie
-    	// Change social links
-    	if (rightClicker instanceof NPC) {
-    		NPC friend = (NPC) rightClicker;
-    		if (this.social_position.containsKey(friend)) {
-            	this.social_position.get(friend).buddinessUp(this.present_sensibility);
-            }
+    @EventHandler
+    public void NPCRightClickEvent(NPCRightClickEvent event) {
+    	if (event.getNPC() == this.getNPC()) {
+    		// Check that it has a cookie
+    		// Take the cookie
+    		// Change social links
+    		if (event.getClicker() instanceof NPC) {
+    			NPC friend = (NPC) event.getClicker();
+    			if (this.social_position.containsKey(friend)) {
+    				this.social_position.get(friend).buddinessUp(this.present_sensibility);
+    			}
+    		}
+    		// Show particles
+    		Bukkit.broadcastMessage("<" + this.npc.getName() + "> Ty you!");
     	}
-    	// Show particles
-    	Bukkit.broadcastMessage(this.npc.getName() + "> Ty you!");
     }
     
 }
